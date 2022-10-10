@@ -1,65 +1,39 @@
-import java.util.Scanner;
-
-/*
- * Java Program to implement binary search without using recursion
- */
-public class BinarySearch {
-
-    public static void main(String[] args) {
-
-        Scanner commandReader = new Scanner(System.in);
-        System.out.println("Welcome to Java Program to perform 
-                               binary search on int array");
-        System.out.println("Enter total number of elements : ");
-        int length = commandReader.nextInt();
-        int[] input = new int[length];
-
-        System.out.printf("Enter %d integers %n", length);
-        for (int i = 0; i < length; i++) {
-            input[i] = commandReader.nextInt();
+import java.util.*;
+import javax.lang.model.element.Element;
+import javax.lang.model.util.ElementScanner14;
+import javax.swing.text.html.StyleSheet;
+class BinarySearch{
+    public static void main(String arg[]){
+        Scanner sc = new Scanner(System.in);
+        System.out.println("enter size of array:");
+        int n=sc.nextInt();
+        int []a=new int[n];
+        int high=a.length-1;
+        int low=0;
+        for(int i=0;i<n;i++){
+            a[i]=i+1;
         }
-
-        System.out.println("Please enter number to be searched in array 
-                                    (sorted order)");
-        int key = commandReader.nextInt();
-
-        int index = performBinarySearch(input, key);
-
-        if (index == -1) {
-            System.out.printf("Sorry, %d is not found in array %n", key);
-        } else {
-            System.out.printf("%d is found in array at index %d %n", key,
-                                                         index);
-        }
-
-        commandReader.close();
-
+        System.out.println("enter number to find in array between 1 - "+n+":");
+        int key=sc.nextInt();
+        long s =System.nanoTime();
+        binary(a,key,low,high);
+        long e=System.nanoTime();
+        System.out.println("total time is: "+(e-s));
     }
-
-    /**
-     * Java method to perform binary search. It accept an integer array and a
-     * number and return the index of number in the array. If number doesn't
-     * exists in array then it return -1
-     *
-     * @param input
-     * @param number
-     * @return index of given number in array or -1 if not found
-     */
-    public static int performBinarySearch(int[] input, int number) {
-        int low = 0;
-        int high = input.length - 1;
-
-        while (high >= low) {
-            int middle = (low + high) / 2;
-            if (input[middle] == number) {
-                return middle;
-            } else if (input[middle] < number) {
-                low = middle + 1;
-            } else if (input[middle] > number) {
-                high = middle - 1;
-            }
-        }
-        return -1;
+    static void binary(int a[],int key,int low,int high){
+       int mid = (high+low)/2;
+       int found=0;
+       if(low > high){
+          System.out.println("number is not found in array.");
+       }
+       else if(key==a[mid]){
+         System.out.println("number is find at index: "+mid);
+       }  
+       else if(key>a[mid]){
+          binary(a,key,mid+1,high);
+       }
+      else{
+        binary(a,key,low,mid-1);
+      }
     }
-
 }
